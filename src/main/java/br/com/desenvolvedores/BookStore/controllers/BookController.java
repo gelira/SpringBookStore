@@ -44,4 +44,16 @@ public class BookController {
         List<Book> result = bookRepository.saveAll(books);
         return new ResponseEntity<List<Book>>(result, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable("id") String id) {
+        Optional<Book> book = bookRepository.findById(id);
+
+        if (book.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        bookRepository.delete(book.get());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
