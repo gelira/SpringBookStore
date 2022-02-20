@@ -23,7 +23,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable("id") String id) {
+    public ResponseEntity<Book> getBook(@PathVariable("id") Long id) {
         Optional<Book> book = bookRepository.findById(id);
 
         if (book.isEmpty()) {
@@ -35,7 +35,7 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
-        Book result = bookRepository.insert(book);
+        Book result = bookRepository.save(book);
         return new ResponseEntity<Book>(result, HttpStatus.CREATED);
     }
 
@@ -46,7 +46,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBook(@PathVariable("id") String id) {
+    public ResponseEntity<?> deleteBook(@PathVariable("id") Long id) {
         Optional<Book> book = bookRepository.findById(id);
 
         if (book.isEmpty()) {
